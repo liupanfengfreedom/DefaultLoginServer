@@ -50,6 +50,14 @@ namespace DefaultLoginServer
                         Console.WriteLine(utfString1);
                         Program.roomlist = JsonConvert.DeserializeObject<FRoomlist>(utfString1);
                         input1.Close();
+
+                        HttpListenerResponse response1 = mhttplistenercontext.Response;
+                        // Construct a response.
+                        byte[] buffer1 = System.Text.Encoding.UTF8.GetBytes("success");
+                        System.IO.Stream output1 = response1.OutputStream;
+                        output1.Write(buffer1, 0, buffer1.Length);
+                        Thread.Sleep(500);
+                        output1.Close();
                     }
                     if (a.Equals("UserName"))
                     {
