@@ -62,12 +62,13 @@ namespace DefaultLoginServer
                 throw new ArgumentException("prefixes");
 
             // Create a listener.
-            HttpListener listener = new HttpListener();
+            HttpListener listener = new HttpListener { AuthenticationSchemes = AuthenticationSchemes.Anonymous };
             // Add the prefixes. 
-            foreach (string s in prefixes)
-            {
-                listener.Prefixes.Add(s);
-            }
+            //foreach (string s in prefixes)
+            //{
+            //    listener.Prefixes.Add(s);
+            //}
+            listener.Prefixes.Add(string.Format("http://+:{0}/", config.configinfor.tccipport));
             listener.Start();
             Console.WriteLine("Listening...");
             while (true)
