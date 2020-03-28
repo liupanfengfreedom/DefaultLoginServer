@@ -49,7 +49,7 @@ namespace DefaultLoginServer
         }
         static void httpserverthread()
         {
-            string[] prefixes = { config.configinfor.ipaddress };//host http serer
+            string[] prefixes = { config.configinfor.ipaddress, string.Format("http://+:{0}/", config.configinfor.tccipport)};//host http serer
             //string[] prefixes = { "http://localhost:7000/" };//host http serer
             if (!HttpListener.IsSupported)
             {
@@ -64,11 +64,11 @@ namespace DefaultLoginServer
             // Create a listener.
             HttpListener listener = new HttpListener { AuthenticationSchemes = AuthenticationSchemes.Anonymous };
             // Add the prefixes. 
-            //foreach (string s in prefixes)
-            //{
-            //    listener.Prefixes.Add(s);
-            //}
-            listener.Prefixes.Add(string.Format("http://+:{0}/", config.configinfor.tccipport));
+            foreach (string s in prefixes)
+            {
+                listener.Prefixes.Add(s);
+            }
+            //listener.Prefixes.Add(string.Format("http://+:{0}/", config.configinfor.tccipport));
             listener.Start();
             Console.WriteLine("Listening...");
             while (true)
